@@ -18,7 +18,7 @@ class AuthController extends Controller
         if(!Auth::attempt($data)){
             return response([
                 'message' => 'email or password are wrong'
-            ]);
+            ], 422);
         }
         $user = Auth::user();
         $token = $user->createToken('main')->plainTextToken;
@@ -38,6 +38,7 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'role' => 'user',
         ]);
 
         $token = $user->createToken('main')->plainTextToken;
